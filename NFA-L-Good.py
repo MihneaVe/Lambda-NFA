@@ -7,15 +7,17 @@ def lambda_discover(cur_state):
             allstate.update(trans_table[cur_state]['.'])
             for x in trans_table[cur_state]['.']:
                 if cur_state != x:
-                    if '.' in trans_table[x]:
-                        if all(item not in allstate for item in trans_table[x]['.']):
-                            lambda_discover(x)
+                    if x in trans_table:
+                        if '.' in trans_table[x]:
+                            if all(item not in allstate for item in trans_table[x]['.']):
+                                lambda_discover(x)
 #this function finds all possible lambda/epsilon transitions from the current state
 
 def transition_once(cur_state, letter):
     global allstate
     newstate = set({})
     if cur_state in trans_table:
+        newstate = {cur_state}
         if '.' in trans_table[cur_state]:
             newstate.update(trans_table[cur_state]['.'])
             for x in trans_table[cur_state]['.']:
@@ -38,7 +40,7 @@ def transition_once(cur_state, letter):
                         lambda_discover(y)
                 else:
                     allstate.update(newstate)
-        newstate = allstate
+        newstate = newstate | allstate
         allstate = set({})
     return newstate
 
@@ -90,10 +92,11 @@ for i in range(8, len(lines)):
     # We add the transitions
 
 
-# lambda_discover('9909')
-# print(allstate)
-# print(transition_once('9909', 'd'))
+
 print(trans_table)
+# print(lambda_discover('5'))
+# print(allstate)
+# transition_once('1081', 's')
 with open('Output.txt', 'w') as f:
     for word in lines[word_try+1:]:
         word = word.strip()
