@@ -107,3 +107,5 @@ with open('Output.txt', 'w') as f:
             f.write('DA\n')
         else:
             f.write('NU\n')
+
+#Made by Velcea Mihnea-Andrei, finished on 4/4/2024
